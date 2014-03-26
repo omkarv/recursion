@@ -4,9 +4,9 @@
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
   // your code goes here
+  var outputString = ""; //initialising outputs
   //check if input obj is a string, number, array, object, boolean or undefined
   //then carry out resulting processing based on the input type 
-  var outputString = "";
   if(Array.isArray(obj)) { // check if array
     outputString = outputString + "[";
     for (var item = 0; item < obj.length; item++) {
