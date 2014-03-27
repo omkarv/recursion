@@ -2,34 +2,29 @@
 // var getElementsByClassName = function (className) {
 //   return document.getElementsByClassName(className);
 // };
-
-// But in stead we're going to implement it from scratch:
-//can use documents.body, element.childNodes, element.classList.contains(classname)
 var getElementsByClassName = function (className) {
-  // your code here
-  //iterate through classes in document.body.childNodes, checking whether they have the class in question
+
+  //iterate through childnodes in document.body.childNodes, checking whether they have the class in question
   //by using the classList.contains(classname) method.  Each child Node childNode[...], may also have its own
-  //sub childNode, so its necessary to iterate through those too
-  
-  var checkChildNodes = function(selector) {
-    //if class is in childNode
-    // return an array of nodes which has the className in question
-    // or an object with numeric keys + length
-    if (selector.childNodes) { // if selector has child Nodes 
+  //sub childNode, so its necessary to iterate recursively through those too
+  var searchChildNodes = function(selectedElement) { 
+ // this function searches an html element's child elements for an element with the class in question
+ // it will output an array with elements, that are labelled with the class specified in the parent function argument
+    if (selectedElement.childNodes) { // if selectedElement has child Nodes 
       var childNodeSubElements = [];
-      _.each(selector.childNodes , function(element, index) {
-        if(selector.childNodes[index].classList){
-            if (selector.childNodes[index].classList.contains(className)) {
+      _.each(selectedElement.childNodes , function(element, index) {
+        var selectedElementsChild = selectedElement.childNodes[index];
+        if(selectedElementsChild.classList){
+            if (selectedElementsChild.classList.contains(className)) {
               childNodeSubElements.push(element);
             }
-            childNodeSubElements.push(checkChildNodes(selector.childNodes[index]));
+            childNodeSubElements.push(searchChildNodes(selectedElementsChild)); // recursive call
         }
       });
     return childNodeSubElements;
     }
-  }
+  };
 
-  //return an array of nodes which have the className in question
-  return checkChildNodes(document.body);
-
+  //return an array of nodes which have the className specified in the argument
+  return _.flatten(searchChildNodes(document.body));
 };

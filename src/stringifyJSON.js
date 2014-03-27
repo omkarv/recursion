@@ -7,7 +7,7 @@ var stringifyJSON = function (obj) {
   var outputString = ""; //initialising outputs
   //check if input obj is a string, number, array, object, boolean or undefined
   //then carry out resulting processing based on the input type 
-  if(Array.isArray(obj)) { // check if array
+  if(Array.isArray(obj)) { // check if array  ****** ARRAY HANDLING below
     outputString = outputString + "[";
     for (var item = 0; item < obj.length; item++) {
        var val = obj[item];
@@ -42,7 +42,7 @@ var stringifyJSON = function (obj) {
   } else if((obj === null )||(typeof obj === 'boolean')) {    // check if null or boolean
       outputString = "" + obj + "";
 
-  } else if(typeof obj === 'object') {         //check if object
+  } else if(typeof obj === 'object') {         //check if object  ****** OBJECT HANDLING
       var count = 0;  //counting no of processed key value pairs in current object
       outputString = outputString + "{";
       for (var key in obj) {
@@ -80,5 +80,4 @@ var stringifyJSON = function (obj) {
   }
 
   return outputString;
-
 };
