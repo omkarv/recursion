@@ -22,24 +22,20 @@ var stringifyJSON = function (obj) {
       outputString = obj.toString();
 
   } else if((obj === null )||(typeof obj === 'boolean')) {    // check if null or boolean
-      outputString = "" + obj;
+      outputString += obj;
  
   } else if(obj === undefined) { //check if undefined
     outputString = undefined;
 
   } else if(typeof obj === 'object') {         //check if object  ****** OBJECT HANDLING
-      var count = 0;  //counting no of processed key value pairs in current object
-      //outputString = outputString + "{";
+      var output = [];
       for (var key in obj) {
-             var noComma = false; //flag of whether to append a comma or not
              var value = obj[key];
-             var output = [];
-             results.push(stringifyJSON(key) + ":" + stringifyJSON(value));
+             if ((typeof value !== 'function') && (value !== undefined)) {
+              output.push(stringifyJSON(key) + ":" + stringifyJSON(value));
+             }
       }
-      outputString = "{" + results.join(",") + "}";
-
-
+      outputString = "{" + output.join(',') + "}";
   }
-
   return outputString;
 };
